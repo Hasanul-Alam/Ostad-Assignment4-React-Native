@@ -3,24 +3,12 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { IoIosCheckbox } from "react-icons/io";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import listEmpty from "../assets/images/listEmpty.png";
+import EditTodoModal from "./EditTodoModal";
+import { useState } from "react";
 
-const Todos = ({ todos, setTodos }) => {
-  const toggleStatus = (id) => {
-    for (let i = 0; i < todos.length; i++) {
-      if (todos[i].id === id) {
-        if (todos[i].status === "completed") {
-          todos[i].status = "incomplete";
-        } else {
-          todos[i].status = "completed";
-        }
-      }
-    }
-    setTodos([...todos]);
-  };
-
-  const handleDeleteItem = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+const Todos = ({ todos, toggleStatus, onDeleteItem, onUpdate }) => {
+  const [isOpenUpdaeModal, setIsOpenUpdaeModal] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState({});
   if (todos.length === 0) {
     return (
       <div className="flex items-center justify-center w-full h-[50vh]">
@@ -66,16 +54,28 @@ const Todos = ({ todos, setTodos }) => {
           <div className="flex items-center gap-3">
             <FaRegEdit
               size={15}
+              onClick={() => {
+                setSelectedTodo(todo);
+                setIsOpenUpdaeModal(true);
+              }}
               className="text-gray-400 text-[25px] cursor-pointer hover:text-[#6c63ff]"
             />
             <FaRegTrashCan
               size={15}
-              onClick={() => handleDeleteItem(todo.id)}
+              onClick={() => onDeleteItem(todo.id)}
               className="text-gray-400 cursor-pointer hover:text-red-400"
             />
           </div>
         </div>
       ))}
+
+      <EditTodoModal
+        isOpen={isOpenUpdaeModal}
+        onClose={() => setIsOpenUpdaeModal(false)}
+        onUpdate={onUpdate}
+        todo={selectedTodo}
+        title={"Update Task"}
+      />
     </>
   );
 };

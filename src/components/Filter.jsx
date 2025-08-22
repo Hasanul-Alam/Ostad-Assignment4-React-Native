@@ -1,12 +1,14 @@
 import React from "react";
 
-const Filter = () => {
+const Filter = ({ value, onChange }) => {
   return (
     <div className="relative">
       <select
         name="cars"
         id="cars"
         className="appearance-none w-[160px] h-[45px] px-3 pr-8 rounded-lg border border-gray-300 bg-white dark:bg-black dark:text-white text-gray-700  focus:outline-none focus:ring-2 focus:ring-[#6c63ff] transition duration-200 cursor-pointer"
+        value={value}
+        onChange={onChange}
       >
         <option value="all">All</option>
         <option value="completed">Completed</option>

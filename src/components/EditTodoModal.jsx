@@ -33,6 +33,14 @@ const EditTodoModal = ({ isOpen, onClose, title, onUpdate, todo }) => {
             onChange={(e) => setTaskText(e.target.value)}
             className="w-full border border-gray-300 rounded-lg px-4 py-2"
             placeholder="Enter your task"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onUpdate(todo.id, taskText);
+                setTaskText("");
+                onClose();
+              }
+            }}
+            autoFocus
           />
         </div>
 

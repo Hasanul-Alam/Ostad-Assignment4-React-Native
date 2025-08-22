@@ -1,76 +1,10 @@
-import React, { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoIosCheckbox } from "react-icons/io";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import listEmpty from "../assets/images/listEmpty.png";
 
-const fakeTodos = [
-  {
-    id: 1,
-    todo: "Finish React project setup",
-    status: "completed",
-    createdAt: "2025-08-01T09:30:00Z",
-  },
-  {
-    id: 2,
-    todo: "Buy groceries (milk, eggs, bread)",
-    status: "incomplete",
-    createdAt: "2025-08-02T14:10:00Z",
-  },
-  {
-    id: 3,
-    todo: "Call the electrician",
-    status: "completed",
-    createdAt: "2025-08-03T11:45:00Z",
-  },
-  {
-    id: 4,
-    todo: "Prepare slides for Monday meeting",
-    status: "incomplete",
-    createdAt: "2025-08-04T16:20:00Z",
-  },
-  {
-    id: 5,
-    todo: "Go for a 30-min run",
-    status: "completed",
-    createdAt: "2025-08-05T07:15:00Z",
-  },
-  {
-    id: 6,
-    todo: "Clean the kitchen",
-    status: "incomplete",
-    createdAt: "2025-08-06T12:40:00Z",
-  },
-  {
-    id: 7,
-    todo: "Read 20 pages of a book",
-    status: "incomplete",
-    createdAt: "2025-08-07T21:05:00Z",
-  },
-  {
-    id: 8,
-    todo: "Reply to client emails",
-    status: "completed",
-    createdAt: "2025-08-08T10:25:00Z",
-  },
-  {
-    id: 9,
-    todo: "Organize workspace",
-    status: "incomplete",
-    createdAt: "2025-08-09T13:50:00Z",
-  },
-  {
-    id: 10,
-    todo: "Plan weekend trip",
-    status: "completed",
-    createdAt: "2025-08-10T18:30:00Z",
-  },
-];
-
-const Todos = () => {
-  const [todos, setTodos] = useState(fakeTodos);
-
+const Todos = ({ todos, setTodos }) => {
   const toggleStatus = (id) => {
     for (let i = 0; i < todos.length; i++) {
       if (todos[i].id === id) {
@@ -82,6 +16,10 @@ const Todos = () => {
       }
     }
     setTodos([...todos]);
+  };
+
+  const handleDeleteItem = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
   if (todos.length === 0) {
     return (
@@ -132,6 +70,7 @@ const Todos = () => {
             />
             <FaRegTrashCan
               size={15}
+              onClick={() => handleDeleteItem(todo.id)}
               className="text-gray-400 cursor-pointer hover:text-red-400"
             />
           </div>
